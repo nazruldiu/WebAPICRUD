@@ -38,9 +38,9 @@ namespace WebAPIFullCRUDWithFile.DataService.Repository
             }
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
-            return await dbSet.ToListAsync();
+            return dbSet.ToList();
         }
 
         public virtual async Task<T> GetById(int id)

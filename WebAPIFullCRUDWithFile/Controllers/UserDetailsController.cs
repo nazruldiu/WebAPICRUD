@@ -22,14 +22,15 @@ namespace WebAPIFullCRUDWithFile.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            //var details = (from user in _unitOfWork.Users
-            //               join userdetails in _unitOfWork.UserDetails on user.Id equals userdetails.UserId
-            //               select new
-            //               {
-            //                   Username = user.Username,
-            //                   Address = user.Address
-            //               }).ToList();
-            var details = _unitOfWork.UserDetails.GetUserDetails();
+            var details = (from user in _unitOfWork.Users.GetAll()
+                           join userdetails in _unitOfWork.UserDetails.GetAll() on user.Id equals userdetails.UserId
+                           select new
+                           {
+                               Username = user.Username,
+                               Address = userdetails.Address
+                           }).ToList();
+
+            //var details = _unitOfWork.UserDetails.GetUserDetails();
             return Ok(details);
         }
         [Authorize]

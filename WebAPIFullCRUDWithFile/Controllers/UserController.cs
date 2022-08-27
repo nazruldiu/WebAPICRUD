@@ -26,7 +26,7 @@ namespace WebAPIFullCRUDWithFile.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var userList = await _unitOfWork.Users.GetAll();
+            var userList = await Task.Run(() => _unitOfWork.Users.GetAll()); 
             return Ok(userList);
         }
 
@@ -109,7 +109,7 @@ namespace WebAPIFullCRUDWithFile.Controllers
         public IActionResult Login([FromBody] UserViewModel loginRequest)
         {
             var userList = _unitOfWork.Users.GetAll();
-            var user = userList.Result.Where(x => x.Username == loginRequest.Username && x.Password == loginRequest.Password).FirstOrDefault();
+            var user = userList.Where(x => x.Username == loginRequest.Username && x.Password == loginRequest.Password).FirstOrDefault();
             if (user == null)
             {
                 return BadRequest("Authentication Fail");
